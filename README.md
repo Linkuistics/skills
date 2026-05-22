@@ -1,4 +1,4 @@
-# coding-standards
+# skills
 
 Antony Blakey's coding standards, packaged as agent **skills** so they load
 lazily — only when relevant to the file or task at hand — across Claude Code,
@@ -9,7 +9,7 @@ This repository is two things at once:
 
 - a **Claude Code plugin marketplace** (`.claude-plugin/marketplace.json`), and
 - the **canonical source** for the skill directories under
-  `plugins/coding-standards/skills/`.
+  `plugins/linkuistics/skills/`.
 
 ## What's here
 
@@ -32,8 +32,8 @@ fall back to the `description`.
 ## Install — Claude Code
 
 ```
-/plugin marketplace add Linkuistics/coding-standards
-/plugin install coding-standards@linkuistics-standards
+/plugin marketplace add Linkuistics/skills
+/plugin install linkuistics@linkuistics
 ```
 
 Enable auto-update for the marketplace (`/plugin` → Marketplaces → Enable
@@ -42,8 +42,8 @@ auto-update) so every Claude Code startup pulls the latest skills.
 ## Install — Codex, Gemini CLI, other SKILL.md harnesses
 
 ```
-git clone https://github.com/Linkuistics/coding-standards.git
-cd coding-standards
+git clone https://github.com/Linkuistics/skills.git
+cd skills
 ./install.sh
 ```
 
@@ -64,6 +64,6 @@ then only ship updates when that field changes.
 
 ## Editing a skill
 
-Edit the `SKILL.md` under `plugins/coding-standards/skills/<name>/` and commit.
+Edit the `SKILL.md` under `plugins/linkuistics/skills/<name>/` and commit.
 Keep `description` sharp (key use case first) and the body concise — an invoked
 skill stays in context for the rest of the session.

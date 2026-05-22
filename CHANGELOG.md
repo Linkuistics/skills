@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Renamed the repo to `Linkuistics/skills` and the plugin to `linkuistics`
+  (namespace `linkuistics:`); added an Apache-2.0 licence.
 - Initial release. Coding standards packaged as agent skills:
   - `coding-style` — universal principles (auto-loads on any file).
   - `coding-style-{rust,python,elixir,bash,swift,typescript}` — per-language
