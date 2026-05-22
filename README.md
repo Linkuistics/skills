@@ -23,6 +23,7 @@ This repository is two things at once:
 | `coding-style-swift` | `*.swift` | |
 | `coding-style-typescript` | `*.ts`, `*.tsx` | |
 | `cli-tool-design` | by description | checklist in `SKILL.md`, audit detail in `references/` |
+| `grove` | by description; materialised per repo | methodology for long, multi-session workstreams — see `skills/grove/SKILL.md` |
 
 Each skill's one-line `description` is the only standing context cost; the body
 loads on demand. In Claude Code the `paths:` frontmatter makes language skills
@@ -61,6 +62,18 @@ version bump required.
 If you later want controlled releases instead, add a `version` field to
 `plugin.json` and bump it per [semver](https://semver.org) — Claude Code will
 then only ship updates when that field changes.
+
+## grove — materialised, not installed
+
+`grove` is a workstream methodology. Unlike the coding-style skills, a project
+consuming it for serious work does not install the plugin — it **materialises**
+grove into its own repo so the methodology version is pinned by the project's
+own git history:
+
+    scripts/materialise-grove.sh <path-to-consuming-repo> [<ref>]
+
+This copies `grove/` into the consuming repo's `.claude/skills/grove/` and
+writes a `VERSION.md` provenance stamp. Updating is the same command again.
 
 ## Editing a skill
 
