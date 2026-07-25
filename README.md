@@ -1,81 +1,47 @@
-# skills
+# skills — moved to Linkuistics/grove
 
-Antony Blakey's coding-style skills, packaged as a Claude Code plugin (and consumable from other `SKILL.md` harnesses).
+**This repository is archived.** Its contents — the `linkuistics` and
+`testanyware` skill plugins, and the `linkuistics` plugin marketplace — now live
+in **<https://github.com/Linkuistics/grove>**, alongside the `grove` workstream
+CLI they change in lockstep with. The full history was grafted in, so `git blame`
+on the skill files still traces past the move.
 
-> Looking for **grove**? It moved to its own repo: <https://github.com/Linkuistics/grove>. Install via `brew tap Linkuistics/taps && brew install grove`.
+## If you use the Claude Code marketplace
 
-## What's here
-
-A suite of agent **skills** that load lazily — only when relevant to the file or task at hand — across Claude Code, Codex, and other agents that support the [`SKILL.md`](https://agentskills.io) open standard.
-
-| Skill | Loads when | Notes |
-|-------|-----------|-------|
-| `coding-style` | any file (`paths: "**/*"`) | universal principles — TDD, naming, simplicity |
-| `coding-style-rust` | `*.rs` | extends `coding-style` |
-| `coding-style-python` | `*.py` | |
-| `coding-style-elixir` | `*.ex`, `*.exs` | |
-| `coding-style-bash` | `*.sh`, `*.bash` | |
-| `coding-style-swift` | `*.swift` | |
-| `coding-style-typescript` | `*.ts`, `*.tsx` | |
-| `cli-tool-design` | by description | checklist in `SKILL.md`, audit detail in `references/` |
-| `codebase-design` | by description | deep-module design vocabulary — Ousterhout depth + Feathers seams, language-neutral |
-| `decision-records` | by description | ADRs as a minimum coherent set describing the design's current state — current-state over changelog, identity by slug not number |
-| `doubt-driven-development` | by description | in-flight adversarial verify — spawn a fresh-context reviewer to disprove a non-trivial decision before it stands |
-| `git-to-jj-mapping` | by description | on-demand git→jj reference — command and concept translation, loaded only when a specific translation is needed |
-| `using-jujutsu` | by description | drive version control through Jujutsu natively when the repo is jj-enabled (`.jj/` present); git, silently, everywhere else |
-| `authoring-conventions` | by hand (`/authoring-conventions`, user-invoked) | house `SKILL.md` conventions — a thin delta over superpowers' `writing-skills` |
-| `guardrail` | by hand (`/guardrail`, user-invoked) | session-scoped `PreToolUse` gate — pauses for confirmation before destructive shell commands or edits outside the project ("freeze") |
-
-Each skill's one-line `description` is the only standing context cost; the body loads on demand. In Claude Code the `paths:` frontmatter makes language skills auto-load deterministically by file type. Other harnesses ignore `paths:` and fall back to the `description`.
-
-## Also in this marketplace
-
-The **`testanyware`** plugin ships one skill, `using-testanyware`, that makes
-driving GUI apps inside isolated macOS/Linux/Windows VMs (via the `testanyware`
-CLI) standard practice — run, test, screenshot, or record a GUI app without it
-touching your host, or reach a Windows/Linux environment from macOS. It installs
-independently:
+Run both of these:
 
 ```
-/plugin marketplace add Linkuistics/skills
-/plugin install testanyware@linkuistics
+/plugin marketplace remove linkuistics
+/plugin marketplace add Linkuistics/grove
 ```
 
-## Install — Claude Code
+**Do this even though nothing looks broken.** An archived GitHub repo stays
+readable, so Claude Code's marketplace auto-update keeps *succeeding* against
+this repo — the skills simply freeze at the last commit before the archive, with
+no error surfaced.
+
+Nothing else changes. The marketplace keeps the name `linkuistics` — its identity
+is the `name` field in `marketplace.json`, never the repo URL — so
+`linkuistics@linkuistics`, `testanyware@linkuistics` and every
+`linkuistics:<skill>` reference keep working untouched.
+
+## If you use `install.sh` (Codex, Gemini CLI, other SKILL.md harnesses)
+
+Re-clone from the new repo and re-run the script:
 
 ```
-/plugin marketplace add Linkuistics/skills
-/plugin install linkuistics@linkuistics
-```
-
-Enable auto-update for the marketplace (`/plugin` → Marketplaces → Enable
-auto-update) so every Claude Code startup pulls the latest skills.
-
-## Install — Codex, Gemini CLI, other SKILL.md harnesses
-
-```
-git clone https://github.com/Linkuistics/skills.git
-cd skills
+git clone https://github.com/Linkuistics/grove.git
+cd grove
 ./install.sh
 ```
 
-`install.sh` symlinks each skill directory into `~/.codex/skills/`,
-`~/.gemini/skills/`, etc. (only for harnesses that are installed). Update
-with `git pull` — the symlinks mean the content refreshes in place.
+The symlinks this script writes point into the clone, so the old clone must be
+replaced rather than pulled.
 
-## Updating / versioning
+## Why
 
-The plugin uses **commit-SHA versioning**: `plugin.json` deliberately has no
-`version` field, so Claude Code treats every new commit as an update. Push a
-change and consumers with auto-update enabled pick it up on next startup; no
-version bump required.
-
-If you later want controlled releases instead, add a `version` field to
-`plugin.json` and bump it per [semver](https://semver.org) — Claude Code will
-then only ship updates when that field changes.
-
-## Editing a skill
-
-Edit the `SKILL.md` under `plugins/linkuistics/skills/<name>/` and commit.
-Keep `description` sharp (key use case first) and the body concise — an
-invoked skill stays in context for the rest of the session.
+The two components change together: most `grove` changes need a matching skill
+change, and while they lived in separate repos no single commit could carry both
+— this repo's history contains three commits whose entire content was a pointer
+at the other one. The reasoning and the rejected alternatives are in
+[`docs/adr/skills-monorepo.md`](https://github.com/Linkuistics/grove/blob/main/docs/adr/skills-monorepo.md).
